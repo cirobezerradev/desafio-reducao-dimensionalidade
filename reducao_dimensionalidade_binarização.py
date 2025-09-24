@@ -10,7 +10,6 @@ Passo 1: Importação das bibliotecas
 """
 
 import cv2 as cv
-import numpy as np
 from matplotlib import pyplot as plt
 import sys
 
@@ -67,3 +66,9 @@ for i, (title, image) in enumerate(images.items()):
     plt.axis("off") # para não plotar os eixos
 
 plt.show()
+
+"""Passo 5: Gravar as imagens"""
+
+cv.imwrite("images/image_rgb.png", img_rgb)
+cv.imwrite("images/image_gray.png", img_gray)
+cv.imwrite("images/image_bin.png", img_bin)
