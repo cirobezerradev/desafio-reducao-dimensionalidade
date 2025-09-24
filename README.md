@@ -9,18 +9,92 @@ Por meio da imagem é possível visualizar os dois casos esperados:
 
 Figura 1: Lena colorida (imagem de entrada), em níveis de cinza e preto e branca.
 
+---
 ### Iniciando o Desafio:
 > Primeiramente decidi realizar a redução de dimensionalidade a partir de uma imagem que baixei no google.
 <img width="932" height="621" alt="imagem" src="https://github.com/user-attachments/assets/87409bdf-0cbb-4559-8a05-7982492e152f" />
 Figura 2: Ciclista numa ciclovia (imagem tem originalmente largura 932px e altura 621px)
 
-Passo 1: Importação das bibliotecas
+
+### Passo 1: Importação das bibliotecas
 ```python
 import cv2 as cv
 from matplotlib import pyplot as plt
 import sys
 ```
 
-Passo 2: Ler a imagem
-> 
+### Passo 2: Ler a imagem
+> Para ler a imagem usa-se o método `imread` e o parâmetro com o path da imagem.
+> Achei importante também verificar se foi possível ler a imagem, caso contrário encerra o processamento do sistema
+```python
+# Ler imagem usando a biblioteca opencv
+img = cv.imread("images/image.png")
+
+# Verifica se foi possivel ler a imagem caso contrário retorna a mensagem e encerra aplicação
+if img is None:
+    sys.exit("Não foi possível ler a imagem.")
+```
+
+### Passo 3: Tratar as imagens
+> Primeiramente verifiquei que seria interessante redimensionar a imagem, nesse caso criei uma função para realizar esse redimencionamento de forma mais proporcional possível.
+```python
+# Criei uma função para reduzir o tamanho da imagem
+def resize_image(new_width: int) -> None:
+  factor = new_width / img.shape[1]
+  new_height = int(img.shape[0] * factor)
+  return new_width, new_height
+```
+
+> Em seguida redimensionei a imagem usando a função criada:
+```python
+# Uso da função para reduzir a imagem proporcionalmente para a largura 350px
+img = cv.resize(img, resize_image(350)) # largura 350px
+```
+
+> E finalmente a parte do algoritmo que será responsável pela redução de dimensionalidade.
+> Como decidi exibir as imagens usando matplotlib, foi necessário usar método `cv.cvtColor` com o parâmetro `cv.COLOR_BGR2RGB` para converter a imagem BGR para RGB. Pois o opencv carrega a imagem em BGR e o matplotlib espera uma imagem RGB, caso não faça a conversão a imagem original não fica na cor esperada. Como ilustrado abaixo:
+<img width="350" height="233" alt="image" src="https://github.com/user-attachments/assets/1816a0c3-17be-4309-8cb4-f2c495b8d807" />
+
+> E para a redução de dimencionalidade para escala de cinza usa também o método `cv.cvtCOLOR` convertendo a imagem em RBG para escala de cinza de 0 a 255.
+> E para a binarização usa-se o método `cv.threshold` usando a imagem em escala de cinza, a faixa da escala de cinza,
+> indicando também o metodo `cv.THRESH_BINARY + cv.THRESH_OTSU` para que o cálculo automatico do melhor threshold.
+```python
+# Para não haver alteração ao plotar a imagem pelo matplotlib, precisamos converter a imagem de BGR para RGB
+img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+# Reduz a dimensionalidade para escalas de cinza 0 a 255
+img_gray = cv.cvtColor(img_rgb, cv.COLOR_RGB2GRAY)
+# Reduz a dimensionalidade binarizando, sendo necessário usar o método OTSU para
+# realizar cálculo automático do melhor threshold baseado no histograma da imagem.
+_, img_bin = cv.threshold(img_gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
+```
+
+### Passo 4: Exibição da imagem
+```python
+# Para otimizar a exibição, criei um dicionário com indice e valor
+images = {"RBG": img_rgb, "Escala de Cinza": img_gray, "Binarizada": img_bin}
+
+# Ajustar o tamanho para exibição
+plt.figure(figsize=(12,8))
+
+# Iteração do dicionário para colocar titulo adequado em cada imagem
+for i, (title, image) in enumerate(images.items()):
+    plt.subplot(1, 3, i + 1) # Determina a plotagem em uma linha e 3 colunas
+    plt.title(title) # Determina a plotagem do titulo
+    # Verifica se o title na iteração é um RGB 
+    if title == "RGB":
+      plt.imshow(image)
+    else: # se não for RBG ele precisa determinar o cmap="gray", para garantir que apareçam em tons de cinza reais, não em cores estranhas.
+      plt.imshow(image, cmap="gray")
+    plt.axis("off") # para não plotar os eixos
+
+plt.show()
+```
+
+
+
+
+
+
+
+
 
