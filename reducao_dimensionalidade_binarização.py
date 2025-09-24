@@ -25,19 +25,32 @@ if img is None:
 
 """Passo 3: Tratar as imagens"""
 
+# Criei uma função para reduzir o tamanho da imagem
+def resize_image(new_width: int) -> None:
+  factor = new_width / img.shape[1]
+  new_height = int(img.shape[0] * factor)
+  return new_width, new_height
+
+# Uso da função para reduzir a imagem proporcionalmente para a largura 350px
+img = cv.resize(img, resize_image(350))
+
 # Para não haver alteração ao plotar a imagem pelo matplotlib, precisamos converter a imagem de BGR para RGB
-img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 # Reduz a dimensionalidade para escalas de cinza 0 a 255
-img_gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
+img_gray = cv.cvtColor(img_rgb, cv.COLOR_RGB2GRAY)
 # Reduz a dimensionalidade binarizando, sendo necessário usar o método OTSU para realizar cálculo automático do melhor threshold baseado no histograma da imagem.
 _, img_bin = cv.threshold(img_gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
+
+print("Original: ", img_rgb.shape)
+print("Escala de Cinza: ", img_gray.shape)
+print("Binarizada: ", img_bin.shape)
 
 print("Threshold calculado: ", _)
 
 """Passo 4: Exibir as Imagens"""
 
 # Para otimizar a exibição, criei um dicionário com indice e valor
-images = {"RBG": img, "Escala de Cinza": img_gray, "Binarizada": img_bin}
+images = {"RBG": img_rgb, "Escala de Cinza": img_gray, "Binarizada": img_bin}
 
 # Ajustar o tamanho para exibição
 plt.figure(figsize=(12,8))
