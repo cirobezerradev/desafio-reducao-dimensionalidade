@@ -13,3 +13,14 @@ Figura 1: Lena colorida (imagem de entrada), em níveis de cinza e preto e branc
 > Primeiramente decidi realizar a redução de dimensionalidade a partir de uma imagem que baixei no google.
 <img width="932" height="621" alt="imagem" src="https://github.com/user-attachments/assets/87409bdf-0cbb-4559-8a05-7982492e152f" />
 Figura 2: Ciclista numa ciclovia (imagem tem originalmente largura 932px e altura 621px)
+
+Passo 1: Importação das bibliotecas
+```python
+import cv2 as cv
+from matplotlib import pyplot as plt
+import sys
+```
+
+Passo 2: Ler a imagem
+> 
+
