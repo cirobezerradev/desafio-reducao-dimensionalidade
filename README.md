@@ -13,7 +13,12 @@ Figura 1: Lena colorida (imagem de entrada), em níveis de cinza e preto e branc
 ### Iniciando o Desafio:
 > Primeiramente decidi realizar a redução de dimensionalidade a partir de uma imagem que baixei no google.
 <img width="932" height="621" alt="imagem" src="https://github.com/user-attachments/assets/87409bdf-0cbb-4559-8a05-7982492e152f" />
+
 Figura 2: Ciclista numa ciclovia (imagem tem originalmente largura 932px e altura 621px)
+
+> Para desenvolver o desafio usei a plataforma do Google Colab https://colab.research.google.com/drive/18o2qXNf1PhRxzrhhdNiaVG0ULtIBK3Qb?usp=sharing
+
+> E pesquisei pelo tutorial do OpenCV-Python https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html
 
 
 ### Passo 1: Importação das bibliotecas
@@ -89,6 +94,15 @@ for i, (title, image) in enumerate(images.items()):
 
 plt.show()
 ```
+<img width="1139" height="273" alt="image" src="https://github.com/user-attachments/assets/1e9e16e9-dfad-4698-8703-92f5515ab7aa" />
+
+### Passo 5: Gravação das imagens
+```python
+cv.imwrite("images/image_rgb.png", img_rgb)
+cv.imwrite("images/image_gray.png", img_gray)
+cv.imwrite("images/image_bin.png", img_bin)
+```
+
 
 
 
