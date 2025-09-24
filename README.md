@@ -103,6 +103,11 @@ cv.imwrite("images/image_gray.png", img_gray)
 cv.imwrite("images/image_bin.png", img_bin)
 ```
 
+### Conclusão
+> A partir de uma imagem obtida no Google, foi realizado um processo de redução da dimensionalidade utilizando o OpenCV, por meio da conversão de RGB para escala de cinza (RGB2Gray) e posterior binarização. Esse procedimento demonstrou de forma clara a eficiência da redução, preservando as principais características da imagem original com menor complexidade de representação, o que evidencia a utilidade dessas técnicas em tarefas de pré-processamento e análise de imagens.
+<img width="648" height="143" alt="image" src="https://github.com/user-attachments/assets/2462a878-443e-452f-a41a-33574844bde1" />
+
+
 
 
 
